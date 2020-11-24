@@ -1,0 +1,92 @@
+.only_nemoji{
+    cursor: pointer;
+}
+
+.only_nemoji.off img{
+    width: 20px;
+    margin: 0 auto;
+}
+
+.only_nemoji.on img{
+    width: 22px;
+    margin: 0 auto;
+}
+
+.col-nwe-1 {width: 8.33%;}
+.col-nwe-2 {width: 16.66%;}
+.col-nwe-3 {width: 25%;}
+.col-nwe-4 {width: 33.33%;}
+.col-nwe-5 {width: 41.66%;}
+.col-nwe-6 {width: 50%;}
+.col-nwe-7 {width: 58.33%;}
+.col-nwe-8 {width: 66.66%;}
+.col-nwe-9 {width: 75%;}
+.col-nwe-10 {width: 83.33%;}
+.col-nwe-11 {width: 91.66%;}
+.col-nwe-12 {width: 100%;}
+
+[class*="col-nwe-"] {
+    float: left;
+    /*padding: 15px;*/
+    /*border: 1px solid red;*/
+    text-align: center;
+}
+
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+p.p-feeling{
+    font-size: .8em;
+}
+
+p.p-number{
+    font-size: .8em;
+}
+
+p.p-reaccion{
+    font-size: .8em;
+    padding-bottom: 0px;
+}
+
+p.p-votes{
+    font-size: .8em;
+}
+
+
+.chip{
+	padding: 8px 10px;
+	border-radius: 10px;
+	font-weight: 600;
+	font-size: 12px;
+	box-shadow: 0 2px 5px rgba(0,0,0,.25);
+	margin: 0 10px;
+	
+	cursor: pointer;
+}
+
+.chip.primary{
+	background: #2F4058;
+	color: whitesmoke;
+}
+
+.chip.secondary{
+	background: #242933;
+	color: #777;
+}
+
+.chip.warning{
+	background:#FEB904;
+	color: whitesmoke;
+}
+.chip.danger{
+	background: #DA605B;
+	color: whitesmoke;
+}
+
+.chip.info{
+	background: #5FD6D4;
+	color: whitesmoke;
+}
