@@ -1,23 +1,32 @@
 <?php
 
-function newmoji_add_my_admin_link()
-{
-    $path_includes_page_admin = ABSPATH . "wp-content/plugins/newp/includes/newmoji-acp-page.php";
+if ( !function_exists( 'newmoji_add_my_admin_link' ) ) {
 
+  function newmoji_add_my_admin_link()
+  {
+
+      $path_includes_page_admin = plugin_dir_path(__FILE__) . "newmoji-acp-page.php";
+  
       add_menu_page(
-        'Newmoji', // Title of the page
-        'Newmoji', // Text to show on the menu link
-        'manage_options', // Capability requirement to see the link
-        $path_includes_page_admin // The 'slug' - file to display when clicking the link
-    );
+          'Newmoji', // Title of the page
+          'Newmoji', // Text to show on the menu link
+          'manage_options', // Capability requirement to see the link
+          $path_includes_page_admin // The 'slug' - file to display when clicking the link
+      );
+  }
+
 }
 
-function newmoji_print_html ( $content ) {
+if ( !function_exists( 'newmoji_print_html' ) ) {
+
+  function newmoji_print_html ( $content ) {
     global $wpdb;
 
-    
-    require_once ( ABSPATH . "wp-content/plugins/newp/libs/BrowserClient.php" );
-    require_once ( ABSPATH . "wp-content/plugins/newp/libs/IPClient.php" );
+    $path_browser_client = ABSPATH . "wp-content/plugins/newmoji/libs/BrowserClient.php";
+    $path_ip_client      = ABSPATH . "wp-content/plugins/newmoji/libs/IPClient.php";
+
+    require_once ( $path_browser_client );
+    require_once ( $path_ip_client );
     
     $browser = new BrowserClient();
     $ip      = new IPClient();
@@ -25,7 +34,7 @@ function newmoji_print_html ( $content ) {
     $html_votes_exist = "";
     $html_votes       = "";
     
-    $url_newmoji = site_url('/') . 'wp-content/plugins/newp/assets/emojis';
+    $url_newmoji = site_url('/') . 'wp-content/plugins/newmoji/assets/emojis';
     
     //if exists
     $ips          = $ip->getIP();
@@ -124,7 +133,7 @@ function newmoji_print_html ( $content ) {
           <div class="only_nemoji off col-nwe-2" data-info="1" data-hashinfo="<?php echo $h_hash; ?>">
             <div class="row">
               <div class="col-nwe-12">
-                <span><img src="<?php echo $url_newmoji ?>/feliz.png" alt=""></span>
+                <span><img src="<?php echo $url_newmoji; ?>/feliz.png" alt=""></span>
               </div>
             </div>
             <div class="row">
@@ -141,7 +150,7 @@ function newmoji_print_html ( $content ) {
           <div class="only_nemoji off col-nwe-2" data-info="2" data-hashinfo="<?php echo $h_hash; ?>">
             <div class="row">
               <div class="col-nwe-12">
-                <span><img src="<?php echo $url_newmoji ?>/risas.png" alt=""></span>
+                <span><img src="<?php echo $url_newmoji; ?>/risas.png" alt=""></span>
               </div>
             </div>
             <div class="row">
@@ -158,7 +167,7 @@ function newmoji_print_html ( $content ) {
           <div class="only_nemoji off col-nwe-2" data-info="3" data-hashinfo="<?php echo $h_hash; ?>">
             <div class="row">
               <div class="col-nwe-12">
-                <span><img src="<?php echo $url_newmoji ?>/no_me_importa.png" alt=""></span>
+                <span><img src="<?php echo $url_newmoji; ?>/no_me_importa.png" alt=""></span>
               </div>
             </div>
             <div class="row">
@@ -175,7 +184,7 @@ function newmoji_print_html ( $content ) {
           <div class="only_nemoji off col-nwe-2" data-info="4" data-hashinfo="<?php echo $h_hash; ?>">
             <div class="row">
               <div class="col-nwe-12">
-                <span><img src="<?php echo $url_newmoji ?>/enojo.png" alt=""></span>
+                <span><img src="<?php echo $url_newmoji; ?>/enojo.png" alt=""></span>
               </div>
             </div>
             <div class="row">
@@ -192,7 +201,7 @@ function newmoji_print_html ( $content ) {
           <div class="only_nemoji off col-nwe-2" data-info="5" data-hashinfo="<?php echo $h_hash; ?>">
             <div class="row">
               <div class="col-nwe-12">
-                <span><img src="<?php echo $url_newmoji ?>/tristeza.png" alt=""></span>
+                <span><img src="<?php echo $url_newmoji; ?>/tristeza.png" alt=""></span>
               </div>
             </div>
             <div class="row">
@@ -216,153 +225,160 @@ function newmoji_print_html ( $content ) {
   
     return $content .= $html_votes_exist . $html_votes;
   }
-
-
-  // Define 'mfp_Add_Text'
-function mfp_Add_Text()
-{
-  echo "<p style='color: black;'>After the footer is loaded, my text is added!</p>";
 }
 
+
+
 //insert styles and js
-function callback_for_setting_up_scripts() {
+if ( !function_exists( 'callback_for_setting_up_scripts' ) ) {
 
-  $url_newmoji = site_url('/') . 'wp-content/plugins/newp/assets';
-
-  wp_register_style( 'namespace', $url_newmoji . "/css/newmoji.css" );
-  wp_enqueue_style( 'namespace' );
-  wp_enqueue_script( 'namespaceformyscript', $url_newmoji . "/js/main_newmoji.js", array(), false, true );
+  function callback_for_setting_up_scripts() {
+  
+    $url_newmoji = site_url('/') . 'wp-content/plugins/newmoji/assets';
+  
+    wp_register_style( 'namespace', $url_newmoji . "/css/newmoji.css" );
+    wp_enqueue_style( 'namespace' );
+    wp_enqueue_script( 'namespaceformyscript', $url_newmoji . "/js/main_newmoji.js", array(), false, true );
+  }
 }
 
 
 // calls AJAX
-function save_newmoji_ajax(){
-    global $wpdb;
+if ( !function_exists( 'save_newmoji_ajax' ) ) {
+  function save_newmoji_ajax(){
+      global $wpdb;
+  
+      $path_browser_client = ABSPATH . "wp-content/plugins/newmoji/libs/BrowserClient.php";
+      $path_ip_client      = ABSPATH . "wp-content/plugins/newmoji/libs/IPClient.php";
 
-    require_once ( ABSPATH . "wp-content/plugins/newp/libs/BrowserClient.php" );
-    require_once ( ABSPATH . "wp-content/plugins/newp/libs/IPClient.php" );
-
-    $browser = new BrowserClient();
-    $ip      = new IPClient();
-
-    // Check parameters
-    $message      = isset( $_POST['message'] ) ? $_POST['message'] : false;
-    $action_emoji = isset( $_POST['action_emoji'] ) ? $_POST['action_emoji'] : false;
-    $h_hash       = isset( $_POST['h_hash'] ) ? $_POST['h_hash'] : false;
-    $old_hash     = $h_hash;
-    $navegador    = $browser->getBrowser();
-    $ips          = $ip->getIP();
-    $content      = array( 
-      'browser_name'       => $browser->getBrowser(),
-      'browser_version'    => $browser->getVersion(),
-      'browser_user_agent' => $browser->getUserAgent(),
-      'platform'           => $browser->getPlatform(),
-    );
-
-    $content_json = json_encode( $content );
-    $content_json = escapeMYSQL( $content_json );
-    $content_txt  = implode( "|", $content );
-
-
-    
-    //cifrando votacion
-    $fid_posts = openssl_decrypt( $h_hash, "AES-128-ECB", "6GaVg3.-m80hgKS" );
-
-    $txt_hash = sprintf( "%d|%s|%s", $fid_posts, $ips, $content_txt );
-
-    $h_hash = openssl_encrypt( $txt_hash, "AES-128-ECB", "6GaVg3.-m80hgKS" );
-
-    //search if exist
-
-    $sql_search_votes = sprintf("SELECT *
-                                  FROM %s
-                                  WHERE fid_posts = %d AND hash_votes = '%s'
-                                  LIMIT 1;", $wpdb->prefix . 'newmoji_votes', $fid_posts, $h_hash );
-
-    $prepared_query = $wpdb->prepare( $sql_search_votes );
-
-    $results = $wpdb->get_results( $prepared_query );
-
-
-    if($wpdb->last_error !== '') :
-      $wpdb->print_error();
-    endif;
-
-    
-    if ( !empty( $results ) ) {
-      wp_send_json( 
-        array(
-          'message'   => __('The repeat votes', 'wpduf'),
-          'status'    => 'FAIL',
-          'html'      => '',
-          'http_code' => 200,
-          'data'      => array()
-        ) 
+      require_once ( $path_browser_client );
+      require_once ( $path_ip_client );
+  
+      $browser = new BrowserClient();
+      $ip      = new IPClient();
+  
+      // Check parameters
+      $message      = isset( $_POST['message'] ) ? $_POST['message'] : false;
+      $action_emoji = isset( $_POST['action_emoji'] ) ? $_POST['action_emoji'] : false;
+      $h_hash       = isset( $_POST['h_hash'] ) ? $_POST['h_hash'] : false;
+      $old_hash     = $h_hash;
+      $navegador    = $browser->getBrowser();
+      $ips          = $ip->getIP();
+      $content      = array( 
+        'browser_name'       => $browser->getBrowser(),
+        'browser_version'    => $browser->getVersion(),
+        'browser_user_agent' => $browser->getUserAgent(),
+        'platform'           => $browser->getPlatform(),
       );
-    }
-    
-
-    if( !$message ){
-      wp_send_json(  
-        array(
-          'message'   => __('Message not received :(', 'wpduf'),
-          'status'    => 'FAIL',
-          'html'      => '',
-          'http_code' => 200,
-          'data'      => array()
-        ) 
-      );
-    } else{
-
-      $wpdb->insert( $wpdb->prefix . 'newmoji_votes', 
-        array(
-          'fid_emotion' => $action_emoji,
-          'fid_posts'   => $fid_posts,
-          'ip'          => $ips,
-          'navegador'   => $navegador,
-          'content'     => $content_txt,
-          'hash_votes'  => $h_hash,
-          'date_time'   => date('Y-m-d H:i:s')
-        ),
-        array(
-          '%d',
-          '%d',
-          '%s',
-          '%s',
-          '%s',
-          '%s',
-          '%s',
-        ) 
-      ); 
-
-
-      wp_send_json( 
-        array(
-          'message'   => __('Message received, greetings from server!', 'wpduf'),
-          'status'    => 'OK',
-          'html'      => '',
-          'http_code' => 200,
-          'data'      => array(
-            'hash_code' => $old_hash
-          )
-        ) 
-      );
-    } 
+  
+      $content_json = json_encode( $content );
+      $content_json = escapeMYSQL( $content_json );
+      $content_txt  = implode( "|", $content );
+  
+  
+      
+      //cifrando votacion
+      $fid_posts = openssl_decrypt( $h_hash, "AES-128-ECB", "6GaVg3.-m80hgKS" );
+  
+      $txt_hash = sprintf( "%d|%s|%s", $fid_posts, $ips, $content_txt );
+  
+      $h_hash = openssl_encrypt( $txt_hash, "AES-128-ECB", "6GaVg3.-m80hgKS" );
+  
+      //search if exist
+  
+      $sql_search_votes = sprintf("SELECT *
+                                    FROM %s
+                                    WHERE fid_posts = %d AND hash_votes = '%s'
+                                    LIMIT 1;", $wpdb->prefix . 'newmoji_votes', $fid_posts, $h_hash );
+  
+      $prepared_query = $wpdb->prepare( $sql_search_votes );
+  
+      $results = $wpdb->get_results( $prepared_query );
+  
+  
+      if($wpdb->last_error !== '') :
+        $wpdb->print_error();
+      endif;
+  
+      
+      if ( !empty( $results ) ) {
+        wp_send_json( 
+          array(
+            'message'   => __('The repeat votes', 'wpduf'),
+            'status'    => 'FAIL',
+            'html'      => '',
+            'http_code' => 200,
+            'data'      => array()
+          ) 
+        );
+      }
+      
+  
+      if( !$message ){
+        wp_send_json(  
+          array(
+            'message'   => __('Message not received :(', 'wpduf'),
+            'status'    => 'FAIL',
+            'html'      => '',
+            'http_code' => 200,
+            'data'      => array()
+          ) 
+        );
+      } else{
+  
+        $wpdb->insert( $wpdb->prefix . 'newmoji_votes', 
+          array(
+            'fid_emotion' => $action_emoji,
+            'fid_posts'   => $fid_posts,
+            'ip'          => $ips,
+            'navegador'   => $navegador,
+            'content'     => $content_txt,
+            'hash_votes'  => $h_hash,
+            'date_time'   => date('Y-m-d H:i:s')
+          ),
+          array(
+            '%d',
+            '%d',
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+          ) 
+        ); 
+  
+  
+        wp_send_json( 
+          array(
+            'message'   => __('Message received, greetings from server!', 'wpduf'),
+            'status'    => 'OK',
+            'html'      => '',
+            'http_code' => 200,
+            'data'      => array(
+              'hash_code' => $old_hash
+            )
+          ) 
+        );
+      } 
+  }
 }
 
-function escapeMYSQL($value)
-{
-    $search = array("\\",  "\x00", "\n",  "\r",  "'",  '"', "\x1a");
-    $replace = array("\\\\","\\0","\\n", "\\r", "\'", '\"', "\\Z");
 
-    return str_replace($search, $replace, $value);
+if ( !function_exists( 'escapeMYSQL' ) ) {
+  function escapeMYSQL($value)
+  {
+      $search = array("\\",  "\x00", "\n",  "\r",  "'",  '"', "\x1a");
+      $replace = array("\\\\","\\0","\\n", "\\r", "\'", '\"', "\\Z");
+  
+      return str_replace($search, $replace, $value);
+  }
 }
+
 
 //install tables
 function installer(){
-  //include('installer.php');
 
-  $url_installer = ABSPATH . "wp-content/plugins/newp/includes/installer.php";
+  $url_installer = plugin_dir_path(__FILE__) . "installer.php";
 
   include( $url_installer );
 
