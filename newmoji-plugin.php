@@ -33,6 +33,7 @@ add_action('wp_ajax_nopriv_save_newmoji_ajax', 'save_newmoji_ajax');
 add_action('wp_ajax_save_newmoji_ajax', 'save_newmoji_ajax');
 
 
+
 //install tables
 register_activation_hook(__FILE__, 'installer');
 

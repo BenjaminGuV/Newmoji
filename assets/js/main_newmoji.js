@@ -29,14 +29,14 @@
             
             const datas = new FormData();
             datas.append('action', 'save_newmoji_ajax');
-            datas.append('message', 'Button has been clicked!');
             datas.append('action_emoji', action_emoji);
             datas.append('h_hash', h_hash);
 
+            this.path_ajax = localize_vars.url + "wp-admin/admin-ajax.php";
 
-            postData('http://dev.wp-shop.com/wp-admin/admin-ajax.php', datas)
+            postData( this.path_ajax , datas)
             .then( data => {
-                console.log( "datos .....", data ); // JSON data parsed by `data.json()` call
+                // JSON data parsed by `data.json()` call
 
                 if ( data.status == "OK" ) {
                     let hash_code = data.data.hash_code;
@@ -46,7 +46,6 @@
                                         </div>
                                     </div>`;
 
-                    //var c_cont_newmoji = document.getElementsByClassName('cont_newmoji');
                     this.name_code     = 'cont_id_newmoji_' + hash_code;
                     var c_cont_newmoji = document.getElementById( this.name_code );
                     
@@ -92,4 +91,4 @@ async function postData(url = '', data) {
     })
 
     return response.json(); // parses JSON response into native JavaScript objects
-  }
+}

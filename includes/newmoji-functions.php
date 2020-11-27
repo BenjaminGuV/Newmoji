@@ -236,9 +236,20 @@ if ( !function_exists( 'callback_for_setting_up_scripts' ) ) {
   
     $url_newmoji = site_url('/') . 'wp-content/plugins/newmoji/assets';
   
+    
+
     wp_register_style( 'namespace', $url_newmoji . "/css/newmoji.css" );
     wp_enqueue_style( 'namespace' );
     wp_enqueue_script( 'namespaceformyscript', $url_newmoji . "/js/main_newmoji.js", array(), false, true );
+
+    wp_localize_script( 
+      'namespaceformyscript', 
+      'localize_vars', 
+      array( 
+        'url' => site_url('/')
+      ) 
+    );
+
   }
 }
 
@@ -258,7 +269,6 @@ if ( !function_exists( 'save_newmoji_ajax' ) ) {
       $ip      = new IPClient();
   
       // Check parameters
-      $message      = isset( $_POST['message'] ) ? $_POST['message'] : false;
       $action_emoji = isset( $_POST['action_emoji'] ) ? $_POST['action_emoji'] : false;
       $h_hash       = isset( $_POST['h_hash'] ) ? $_POST['h_hash'] : false;
       $old_hash     = $h_hash;
@@ -314,10 +324,10 @@ if ( !function_exists( 'save_newmoji_ajax' ) ) {
       }
       
   
-      if( !$message ){
+      if( !$action_emoji ){
         wp_send_json(  
           array(
-            'message'   => __('Message not received :(', 'wpduf'),
+            'message'   => __('Data not received :(', 'wpduf'),
             'status'    => 'FAIL',
             'html'      => '',
             'http_code' => 200,
@@ -373,6 +383,7 @@ if ( !function_exists( 'escapeMYSQL' ) ) {
       return str_replace($search, $replace, $value);
   }
 }
+
 
 
 //install tables
