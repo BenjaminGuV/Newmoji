@@ -16,21 +16,21 @@
 require_once plugin_dir_path(__FILE__) . 'includes/newmoji-functions.php';
 
 //menu admin
-add_action( 'admin_menu', 'newmoji_add_my_admin_link' );
+add_action( 'admin_menu', 'nwmj_newmoji_add_my_admin_link' );
 
 //print html
-add_action( 'the_content', 'newmoji_print_html' );
+add_action( 'the_content', 'nwmj_newmoji_print_html' );
 
  
 //load css and js
-add_action('wp_enqueue_scripts', 'callback_for_setting_up_scripts');
+add_action('wp_enqueue_scripts', 'nwmj_newmoji_callback_scripts');
 
 //ajax request
 // Hook para usuarios no logueados
-add_action('wp_ajax_nopriv_save_newmoji_ajax', 'save_newmoji_ajax');
+add_action('wp_ajax_nopriv_save_newmoji_ajax', 'nwmj_newmoji_save_ajax');
 
 // Hook para usuarios logueados
-add_action('wp_ajax_save_newmoji_ajax', 'save_newmoji_ajax');
+add_action('wp_ajax_save_newmoji_ajax', 'nwmj_newmoji_save_ajax');
 
 
 

@@ -1,8 +1,8 @@
 <?php
 
-if ( !function_exists( 'newmoji_add_my_admin_link' ) ) {
+if ( !function_exists( 'nwmj_newmoji_add_my_admin_link' ) ) {
 
-  function newmoji_add_my_admin_link()
+  function nwmj_newmoji_add_my_admin_link()
   {
 
       $path_includes_page_admin = plugin_dir_path(__FILE__) . "newmoji-acp-page.php";
@@ -17,24 +17,24 @@ if ( !function_exists( 'newmoji_add_my_admin_link' ) ) {
 
 }
 
-if ( !function_exists( 'newmoji_print_html' ) ) {
+if ( !function_exists( 'nwmj_newmoji_print_html' ) ) {
 
-  function newmoji_print_html ( $content ) {
+  function nwmj_newmoji_print_html ( $content ) {
     global $wpdb;
 
-    $path_browser_client = ABSPATH . "wp-content/plugins/newmoji/libs/BrowserClient.php";
-    $path_ip_client      = ABSPATH . "wp-content/plugins/newmoji/libs/IPClient.php";
+    $path_browser_client = WP_PLUGIN_DIR . "/newmoji/libs/NWMJBrowserClient.php";
+    $path_ip_client      = WP_PLUGIN_DIR . "/newmoji/libs/NWMJIPClient.php";
 
     require_once ( $path_browser_client );
     require_once ( $path_ip_client );
     
-    $browser = new BrowserClient();
-    $ip      = new IPClient();
+    $browser = new NWMJBrowserClient();
+    $ip      = new NWMJIPClient();
     
     $html_votes_exist = "";
     $html_votes       = "";
     
-    $url_newmoji = site_url('/') . 'wp-content/plugins/newmoji/assets/emojis';
+    $url_newmoji = WP_PLUGIN_URL . '/newmoji/assets/emojis';
     
     //if exists
     $ips          = $ip->getIP();
@@ -230,13 +230,11 @@ if ( !function_exists( 'newmoji_print_html' ) ) {
 
 
 //insert styles and js
-if ( !function_exists( 'callback_for_setting_up_scripts' ) ) {
+if ( !function_exists( 'nwmj_newmoji_callback_scripts' ) ) {
 
-  function callback_for_setting_up_scripts() {
+  function nwmj_newmoji_callback_scripts() {
   
-    $url_newmoji = site_url('/') . 'wp-content/plugins/newmoji/assets';
-  
-    
+    $url_newmoji = WP_PLUGIN_URL . '/newmoji/assets';
 
     wp_register_style( 'namespace', $url_newmoji . "/css/newmoji.css" );
     wp_enqueue_style( 'namespace' );
@@ -255,22 +253,22 @@ if ( !function_exists( 'callback_for_setting_up_scripts' ) ) {
 
 
 // calls AJAX
-if ( !function_exists( 'save_newmoji_ajax' ) ) {
-  function save_newmoji_ajax(){
+if ( !function_exists( 'nwmj_newmoji_save_ajax' ) ) {
+  function nwmj_newmoji_save_ajax(){
       global $wpdb;
   
-      $path_browser_client = ABSPATH . "wp-content/plugins/newmoji/libs/BrowserClient.php";
-      $path_ip_client      = ABSPATH . "wp-content/plugins/newmoji/libs/IPClient.php";
+      $path_browser_client = WP_PLUGIN_DIR . "/newmoji/libs/NWMJBrowserClient.php";
+      $path_ip_client      = WP_PLUGIN_DIR . "/newmoji/libs/NWMJIPClient.php";
 
       require_once ( $path_browser_client );
       require_once ( $path_ip_client );
   
-      $browser = new BrowserClient();
-      $ip      = new IPClient();
+      $browser = new NWMJBrowserClient();
+      $ip      = new NWMJIPClient();
   
       // Check parameters
-      $action_emoji = isset( $_POST['action_emoji'] ) ? $_POST['action_emoji'] : false;
-      $h_hash       = isset( $_POST['h_hash'] ) ? $_POST['h_hash'] : false;
+      $action_emoji = isset( $_POST['action_emoji'] ) ? sanitize_text_field( $_POST['action_emoji'] )  : false;
+      $h_hash       = isset( $_POST['h_hash'] ) ? sanitize_text_field( $_POST['h_hash'] )  : false;
       $old_hash     = $h_hash;
       $navegador    = $browser->getBrowser();
       $ips          = $ip->getIP();
@@ -282,7 +280,7 @@ if ( !function_exists( 'save_newmoji_ajax' ) ) {
       );
   
       $content_json = json_encode( $content );
-      $content_json = escapeMYSQL( $content_json );
+      $content_json = nwmj_newmoji_escape_MYSQL( $content_json );
       $content_txt  = implode( "|", $content );
   
   
@@ -369,13 +367,14 @@ if ( !function_exists( 'save_newmoji_ajax' ) ) {
             )
           ) 
         );
+
       } 
   }
 }
 
 
-if ( !function_exists( 'escapeMYSQL' ) ) {
-  function escapeMYSQL($value)
+if ( !function_exists( 'nwmj_newmoji_escape_MYSQL' ) ) {
+  function nwmj_newmoji_escape_MYSQL($value)
   {
       $search = array("\\",  "\x00", "\n",  "\r",  "'",  '"', "\x1a");
       $replace = array("\\\\","\\0","\\n", "\\r", "\'", '\"', "\\Z");

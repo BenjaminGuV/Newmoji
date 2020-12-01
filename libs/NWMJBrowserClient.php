@@ -39,7 +39,7 @@
  * http://apptools.com/phptools/browser/
  *
  */
-class BrowserClient
+class NWMJBrowserClient
 {
     private $_agent = '';
     private $_browser_name = '';

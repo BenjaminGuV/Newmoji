@@ -19,10 +19,10 @@
  * For more information, see the following discussion:
  * https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
  *
- * @link       http://example.com
+ * @link       https://github.com/BenjaminGuV/Newmoji
  * @since      1.0.0
  *
- * @package    Plugin_Name
+ * @package    Newmoji
  */
 
 // If uninstall not called from WordPress, then exit.
@@ -30,9 +30,9 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-register_deactivation_hook( __FILE__, 'my_plugin_remove_database' );
+register_deactivation_hook( __FILE__, 'nwmj_newmoji_remove_database' );
 
-function my_plugin_remove_database() {
+function nwmj_newmoji_remove_database() {
 	global $wpdb;
 
 	$table_name             = $wpdb->prefix . "newmoji_votes";

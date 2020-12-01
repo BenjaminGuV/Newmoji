@@ -1,6 +1,6 @@
 <?php 
 
-class IPClient {
+class NWMJIPClient {
 
     private $ip = '';
     
