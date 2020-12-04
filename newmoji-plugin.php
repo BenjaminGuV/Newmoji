@@ -12,6 +12,11 @@
  * License URI: https://opensource.org/licenses/MIT
 */
 
+//PATH
+define( 'NWMJ_NEWMOJI__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'NWMJ_NEWMOJI__PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+
+
 //includes libs functions
 require_once plugin_dir_path(__FILE__) . 'includes/newmoji-functions.php';
 
@@ -35,5 +40,5 @@ add_action('wp_ajax_save_newmoji_ajax', 'nwmj_newmoji_save_ajax');
 
 
 //install tables
-register_activation_hook(__FILE__, 'installer');
+register_activation_hook(__FILE__, 'nwmj_newmoji_installer');
 

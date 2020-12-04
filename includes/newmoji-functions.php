@@ -22,8 +22,8 @@ if ( !function_exists( 'nwmj_newmoji_print_html' ) ) {
   function nwmj_newmoji_print_html ( $content ) {
     global $wpdb;
 
-    $path_browser_client = WP_PLUGIN_DIR . "/newmoji/libs/NWMJBrowserClient.php";
-    $path_ip_client      = WP_PLUGIN_DIR . "/newmoji/libs/NWMJIPClient.php";
+    $path_browser_client = NWMJ_NEWMOJI__PLUGIN_DIR . "libs/NWMJBrowserClient.php";
+    $path_ip_client      = NWMJ_NEWMOJI__PLUGIN_DIR . "libs/NWMJIPClient.php";
 
     require_once ( $path_browser_client );
     require_once ( $path_ip_client );
@@ -34,7 +34,9 @@ if ( !function_exists( 'nwmj_newmoji_print_html' ) ) {
     $html_votes_exist = "";
     $html_votes       = "";
     
-    $url_newmoji = WP_PLUGIN_URL . '/newmoji/assets/emojis';
+    //$url_newmoji = WP_PLUGIN_URL . '/newmoji/assets/emojis';
+    $url_newmoji = NWMJ_NEWMOJI__PLUGIN_URL . 'assets/emojis';
+
     
     //if exists
     $ips          = $ip->getIP();
@@ -234,7 +236,7 @@ if ( !function_exists( 'nwmj_newmoji_callback_scripts' ) ) {
 
   function nwmj_newmoji_callback_scripts() {
   
-    $url_newmoji = WP_PLUGIN_URL . '/newmoji/assets';
+    $url_newmoji = NWMJ_NEWMOJI__PLUGIN_URL . 'assets';
 
     wp_register_style( 'namespace', $url_newmoji . "/css/newmoji.css" );
     wp_enqueue_style( 'namespace' );
@@ -257,8 +259,8 @@ if ( !function_exists( 'nwmj_newmoji_save_ajax' ) ) {
   function nwmj_newmoji_save_ajax(){
       global $wpdb;
   
-      $path_browser_client = WP_PLUGIN_DIR . "/newmoji/libs/NWMJBrowserClient.php";
-      $path_ip_client      = WP_PLUGIN_DIR . "/newmoji/libs/NWMJIPClient.php";
+      $path_browser_client = NWMJ_NEWMOJI__PLUGIN_DIR . "libs/NWMJBrowserClient.php";
+      $path_ip_client      = NWMJ_NEWMOJI__PLUGIN_DIR . "libs/NWMJIPClient.php";
 
       require_once ( $path_browser_client );
       require_once ( $path_ip_client );
@@ -386,9 +388,9 @@ if ( !function_exists( 'nwmj_newmoji_escape_MYSQL' ) ) {
 
 
 //install tables
-function installer(){
+function nwmj_newmoji_installer(){
 
-  $url_installer = plugin_dir_path(__FILE__) . "installer.php";
+  $url_installer = plugin_dir_path(__FILE__) . "newmoji-installer.php";
 
   include( $url_installer );
 
