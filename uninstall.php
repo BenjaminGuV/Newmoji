@@ -17,7 +17,6 @@
  * general skeleton and outline for how the file should work.
  *
  * For more information, see the following discussion:
- * https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
  *
  * @link       https://github.com/BenjaminGuV/Newmoji
  * @since      1.0.0

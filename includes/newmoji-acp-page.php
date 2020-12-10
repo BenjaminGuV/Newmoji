@@ -1,7 +1,7 @@
 <?php 
     global $wpdb;
 
-    $url_newmoji = WP_PLUGIN_URL . '/newmoji/assets/emojis';
+    $url_newmoji = NWMJ_NEWMOJI__PLUGIN_URL . 'assets/emojis';
 
     $table_votes = $wpdb->prefix . 'newmoji_votes';
     $table_posts = $wpdb->prefix . 'posts';
