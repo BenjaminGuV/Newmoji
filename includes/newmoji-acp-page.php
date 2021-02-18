@@ -66,7 +66,7 @@
 
 ?>
 <div class="wrap">
-    <h1>Reaction Statistics!</h1>
+    <h1>Reaction Statistics! <?php echo __( 'Continuezz', 'newmoji' ); ?></h1>
     <br>
     <br>
     <div class="row">

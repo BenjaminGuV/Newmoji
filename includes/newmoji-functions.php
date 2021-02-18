@@ -5,6 +5,8 @@ if ( !function_exists( 'nwmj_newmoji_add_my_admin_link' ) ) {
   function nwmj_newmoji_add_my_admin_link()
   {
 
+    //nwmj_newmoji_load_textdomain();
+
       $path_includes_page_admin = plugin_dir_path(__FILE__) . "newmoji-acp-page.php";
   
       add_menu_page(
@@ -385,6 +387,20 @@ if ( !function_exists( 'nwmj_newmoji_escape_MYSQL' ) ) {
   }
 }
 
+/**
+ * Load plugin textdomain.
+ */
+if ( !function_exists( 'nwmj_newmoji_load_textdomain' ) ) {
+  function nwmj_newmoji_load_textdomain() {
+    echo "<pre>";
+    echo var_dump( "Hola", NWMJ_NEWMOJI__PLUGIN_DIR . 'languages', get_user_locale(),
+    basename( dirname( __FILE__ ) ) . '/languages/' );
+    echo "</pre>";
+    load_plugin_textdomain( 'newmoji', false, NWMJ_NEWMOJI__PLUGIN_DIR . 'languages' ); 
+    //load_plugin_textdomain( 'newmoji' ); 
+  }
+
+}
 
 
 //install tables
