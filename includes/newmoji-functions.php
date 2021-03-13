@@ -5,9 +5,12 @@ if ( !function_exists( 'nwmj_newmoji_add_my_admin_link' ) ) {
   function nwmj_newmoji_add_my_admin_link()
   {
 
+    nwmj_newmoji_callback_scripts();
+
     //nwmj_newmoji_load_textdomain();
 
       $path_includes_page_admin = plugin_dir_path(__FILE__) . "newmoji-acp-page.php";
+      //$path_includes_page_admin = "admin.php?page=newmoji-acp-page.php";
   
       add_menu_page(
           'Newmoji', // Title of the page
@@ -82,7 +85,7 @@ if ( !function_exists( 'nwmj_newmoji_print_html' ) ) {
       ?>
         <div class="row">
           <div class="col-nwe-12">
-            <p class="p-votes">Usted ya voto</p>
+            <p class="p-votes"><?php echo __( 'You already vote', 'newmoji' ); ?></p>
           </div>
         </div>
       <?php
@@ -130,7 +133,7 @@ if ( !function_exists( 'nwmj_newmoji_print_html' ) ) {
       <div class="newmoji_main">
         <div class="row">
           <div class="col-nwe-12">
-            <p class="p-reaccion">¿Cuál es tu reacción?</p>
+            <p class="p-reaccion"><?php echo __( 'What is your reaction?', 'newmoji' ); ?></p>
           </div>
         </div>
         <div id="cont_id_newmoji_<?php echo $h_hash; ?>" class="row cont_newmoji">
@@ -142,7 +145,7 @@ if ( !function_exists( 'nwmj_newmoji_print_html' ) ) {
             </div>
             <div class="row">
               <div class="col-nwe-12">
-                <p class="p-feeling">Feliz</p>
+                <p class="p-feeling"><?php echo __( 'Happy', 'newmoji' ); ?></p>
               </div>
             </div>
             <div class="row">
@@ -159,7 +162,7 @@ if ( !function_exists( 'nwmj_newmoji_print_html' ) ) {
             </div>
             <div class="row">
               <div class="col-nwe-12">
-                <p class="p-feeling">Alegre</p>
+                <p class="p-feeling"><?php echo __( 'Funny', 'newmoji' ); ?></p>
               </div>
             </div>
             <div class="row">
@@ -176,7 +179,7 @@ if ( !function_exists( 'nwmj_newmoji_print_html' ) ) {
             </div>
             <div class="row">
               <div class="col-nwe-12">
-                <p class="p-feeling">Da igual</p>
+                <p class="p-feeling"><?php echo __( 'No matter', 'newmoji' ); ?></p>
               </div>
             </div>
             <div class="row">
@@ -193,7 +196,7 @@ if ( !function_exists( 'nwmj_newmoji_print_html' ) ) {
             </div>
             <div class="row">
               <div class="col-nwe-12">
-                <p class="p-feeling">Enojo</p>
+                <p class="p-feeling"><?php echo __( 'Angry', 'newmoji' ); ?></p>
               </div>
             </div>
             <div class="row">
@@ -210,7 +213,7 @@ if ( !function_exists( 'nwmj_newmoji_print_html' ) ) {
             </div>
             <div class="row">
               <div class="col-nwe-12">
-                <p class="p-feeling">Tristeza</p>
+                <p class="p-feeling"><?php echo __( 'Sad', 'newmoji' ); ?></p>
               </div>
             </div>
             <div class="row">
@@ -316,7 +319,7 @@ if ( !function_exists( 'nwmj_newmoji_save_ajax' ) ) {
       if ( !empty( $results ) ) {
         wp_send_json( 
           array(
-            'message'   => __('The repeat votes', 'wpduf'),
+            'message'   => __('The repeat votes', 'newmoji'),
             'status'    => 'FAIL',
             'html'      => '',
             'http_code' => 200,
@@ -329,7 +332,7 @@ if ( !function_exists( 'nwmj_newmoji_save_ajax' ) ) {
       if( !$action_emoji ){
         wp_send_json(  
           array(
-            'message'   => __('Data not received :(', 'wpduf'),
+            'message'   => __('Data not received :(', 'newmoji'),
             'status'    => 'FAIL',
             'html'      => '',
             'http_code' => 200,
@@ -357,12 +360,92 @@ if ( !function_exists( 'nwmj_newmoji_save_ajax' ) ) {
             '%s',
             '%s',
           ) 
-        ); 
+        );
+
+        //search if exist newmoji_votes_group
+        $sql_exist_votes_group = sprintf("SELECT *
+                                    FROM %s
+                                    WHERE fid_posts = %d
+                                    LIMIT 1;", 
+                                    $wpdb->prefix . 'newmoji_votes_group', $fid_posts );
   
+        $prepared_query = $wpdb->prepare( $sql_exist_votes_group );
+    
+        $results_exist_votes_group = $wpdb->get_results( $prepared_query );
+    
+    
+        if($wpdb->last_error !== '') :
+          $wpdb->print_error();
+        endif;
+
+        $add_votes_group = array();
   
+        if ( !empty( $results_exist_votes_group ) ) {
+
+          if ( $action_emoji == 1 ) {
+            $add_votes_group['reaction_one'] = 1 + $results_exist_votes_group[0]->reaction_one;
+          }
+
+          if ( $action_emoji == 2 ) {
+            $add_votes_group['reaction_two'] = 1 + $results_exist_votes_group[0]->reaction_two;
+          }
+
+          if ( $action_emoji == 3 ) {
+            $add_votes_group['reaction_three'] = 1 + $results_exist_votes_group[0]->reaction_three;
+          }
+
+          if ( $action_emoji == 4 ) {
+            $add_votes_group['reaction_four'] = 1 + $results_exist_votes_group[0]->reaction_four;
+          }
+
+          if ( $action_emoji == 5 ) {
+            $add_votes_group['reaction_five'] = 1 + $results_exist_votes_group[0]->reaction_five;
+          }
+
+          $wpdb->update( $wpdb->prefix . 'newmoji_votes_group', $add_votes_group , array('fid_posts'=>$fid_posts ) );
+
+        }else{
+          //compared $action_emoji
+
+          $add_votes_group = array(
+            'fid_posts'   => $fid_posts,
+          );
+
+          if ( $action_emoji == 1 ) {
+            $add_votes_group['reaction_one'] = 1;
+          }
+
+          if ( $action_emoji == 2 ) {
+            $add_votes_group['reaction_two'] = 1;
+          }
+
+          if ( $action_emoji == 3 ) {
+            $add_votes_group['reaction_three'] = 1;
+          }
+
+          if ( $action_emoji == 4 ) {
+            $add_votes_group['reaction_four'] = 1;
+          }
+
+          if ( $action_emoji == 5 ) {
+            $add_votes_group['reaction_five'] = 1;
+          }
+
+          $wpdb->insert( $wpdb->prefix . 'newmoji_votes_group', 
+            $add_votes_group,
+            array(
+              '%d',
+              '%d'
+            ) 
+          );
+        }
+
+
+        // / search if exist newmoji_votes_group
+
         wp_send_json( 
           array(
-            'message'   => __('Message received, greetings from server!', 'wpduf'),
+            'message'   => __('Your reaction has already been captured', 'newmoji'),
             'status'    => 'OK',
             'html'      => '',
             'http_code' => 200,
@@ -392,10 +475,6 @@ if ( !function_exists( 'nwmj_newmoji_escape_MYSQL' ) ) {
  */
 if ( !function_exists( 'nwmj_newmoji_load_textdomain' ) ) {
   function nwmj_newmoji_load_textdomain() {
-    echo "<pre>";
-    echo var_dump( "Hola", NWMJ_NEWMOJI__PLUGIN_DIR . 'languages', get_user_locale(),
-    basename( dirname( __FILE__ ) ) . '/languages/' );
-    echo "</pre>";
     load_plugin_textdomain( 'newmoji', false, NWMJ_NEWMOJI__PLUGIN_DIR . 'languages' ); 
     //load_plugin_textdomain( 'newmoji' ); 
   }

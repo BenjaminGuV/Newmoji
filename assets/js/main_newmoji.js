@@ -42,7 +42,7 @@
                     let hash_code = data.data.hash_code;
                     var tmp_html = `<div class="row">
                                         <div class="col-nwe-12">
-                                            <h5>Su reacción ya fue capturado</h5>
+                                            <h5>` + data.message + `</h5>
                                         </div>
                                     </div>`;
 

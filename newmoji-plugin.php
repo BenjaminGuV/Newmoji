@@ -5,7 +5,7 @@
  * Description: Your post generates emotions, count the reactions with this simple plugin | Tus post genera emociones, contabiliza las reacciones con este sencillo plugin
  * Text Domain: newmoji
  * Domain Path: /i18n/languages
- * Version: 1.0.0
+ * Version: 1.1.0
  * Requires at least: 5.5.3
  * Requires PHP: 7.2.24
  * Author: Benjamin Guerrero
@@ -14,14 +14,10 @@
  * License URI: https://opensource.org/licenses/MIT
 */
 
-//define('WPLANG', 'es_MX');
-
 //PATH
 define( 'NWMJ_NEWMOJI__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'NWMJ_NEWMOJI__PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
-//lang
-//add_action( 'init', 'nwmj_newmoji_load_textdomain' );
 
 //includes libs functions
 require_once plugin_dir_path(__FILE__) . 'includes/newmoji-functions.php';
@@ -49,14 +45,12 @@ add_action('wp_ajax_save_newmoji_ajax', 'nwmj_newmoji_save_ajax');
 register_activation_hook(__FILE__, 'nwmj_newmoji_installer');
 
 
+//load languages es_MX
 function plugin_name_load_plugin_textdomain() {
 
 	$domain = 'newmoji';
 	$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 
-	// wp-content/languages/plugin-name/plugin-name-de_DE.mo
-	//load_textdomain( $domain, trailingslashit( WP_LANG_DIR ) . $domain . '/' . $domain . '-' . $locale . '.mo' );
-	// wp-content/plugins/plugin-name/languages/plugin-name-de_DE.mo
 	load_plugin_textdomain( $domain, FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
 
 }

@@ -19,7 +19,7 @@
  * For more information, see the following discussion:
  *
  * @link       https://github.com/BenjaminGuV/Newmoji
- * @since      1.0.0
+ * @since      1.1.0
  *
  * @package    Newmoji
  */

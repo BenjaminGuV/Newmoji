@@ -13,5 +13,9 @@
 "Language-Team: \n"
 
 #: includes/newmoji-acp-page.php:69
-msgid "Continuezz"
-msgstr "Continuarss"
+msgid "Reaction Statistics!"
+msgstr "Estadísticas de las reacciones!"
+
+
+msgid "Title post"
+msgstr "Título de las publicaciones"
