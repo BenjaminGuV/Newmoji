@@ -41,12 +41,12 @@
                             $table_votes, $table_posts );
 
 
-    $sql_select = sprintf( "SELECT SQL_CALC_FOUND_ROWS tt_newmoji_votes_group.*, tt_posts.post_title, tt_posts.ID,
+    $sql_select = sprintf( "SELECT SQL_CALC_FOUND_ROWS %1\$s.*, %4\$s.post_title, %4\$s.ID,
                                 (reaction_one + reaction_two + reaction_three + reaction_four + reaction_five) AS total_votes
                             FROM %1\$s
-                            INNER JOIN tt_posts ON tt_posts.ID = tt_newmoji_votes_group.fid_posts
+                            INNER JOIN %4\$s ON %4\$s.ID = %1\$s.fid_posts
                             LIMIT %2\$d, %3\$d;", 
-                            $table_votes_group, $start_limit, $end_limit );
+                            $table_votes_group, $start_limit, $end_limit, $table_posts );
 
     $prepared_query = $wpdb->prepare( $sql_select );
 

@@ -97,9 +97,9 @@ if ( !function_exists( 'nwmj_newmoji_print_html' ) ) {
 
     //checks votes and print
     $sql_search_votes = sprintf( "SELECT fid_emotion, COUNT(*) AS num_votes_emoticons
-                                  FROM tt_newmoji_votes
+                                  FROM %s
                                   WHERE fid_posts = %d
-                                  GROUP BY fid_emotion;", get_the_ID() );
+                                  GROUP BY fid_emotion;", $wpdb->prefix . 'newmoji_votes', get_the_ID() );
 
     $prepared_query = $wpdb->prepare( $sql_search_votes );
 

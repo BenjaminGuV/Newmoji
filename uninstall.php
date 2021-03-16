@@ -34,11 +34,22 @@ register_deactivation_hook( __FILE__, 'nwmj_newmoji_remove_database' );
 function nwmj_newmoji_remove_database() {
 	global $wpdb;
 
+	//delete tables
 	$table_name             = $wpdb->prefix . "newmoji_votes";
 
 	$sql_delete = sprintf( "DROP TABLE IF EXISTS %s;", $table_name );
 
 	$wpdb->query( $sql_delete );
+
+
+	$table_name             = $wpdb->prefix . "newmoji_votes_group";
+
+	$sql_delete = sprintf( "DROP TABLE IF EXISTS %s;", $table_name );
+
+	$wpdb->query( $sql_delete );
+
+	// / delete tables
+
 	delete_option("my_plugin_db_version");
 }
 
